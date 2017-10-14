@@ -1,11 +1,10 @@
 let qwerty = document.getElementById('qwerty');
 let phrase = document.getElementById('phrase');
-var missed = 0;
+let missed = 0;
 let start = document.getElementsByClassName('btn__reset')[0];
 let overlay = document.getElementById("overlay");
 let keyboard = document.getElementById('qwerty');
 let buttons = keyboard.getElementsByTagName('button');
-
 let phrases = [ 'Well nobody is perfect',
                 'Bond James Bond',
                 'Frankly my dear I do not give a damn',
@@ -26,57 +25,97 @@ function addPhrasetoDisplay(arr) {
   let ul = document.getElementById('phrase');
 
     for (i = 0; i < arr.length; i++){
-      // let letter = arr[i];
-      // let t = li.createTextNode(letter);
-      // ul.appendChild(t);
-      // console.log(arr[i]);
-
       var li = document.createElement("LI");
       var letter = document.createTextNode(arr[i]);
       li.appendChild(letter);
       ul.appendChild(li);
-      if (letter != ''){
-        li.className = "letter"
+      if (li.innerHTML != ' '){
+        let letters = document.getElementsByTagName('li');
+        letters[i].className = "letter";
       }
     }
-    // console.log(document.getElementsByClassName('letter'));
-
 };
 
 let letterFound;
 
-
 function checkLetter(but) {
-  // console.log('hi');
+  letterFound = null;
   let allLetters = document.getElementsByClassName('letter');
-      for (i = 0; i < allLetters.length; i++) {
-        let letter = allLetters[i];
-        if (letter == but){
-          li.className = "show";
-          letterFound = letter;
-        } else {
-          letterFound = null;
+      for (let i = 0; i < allLetters.length; i++) {
+        let letter = allLetters[i].innerHTML;
+        // console.log(but);
+        // console.log(allLetters[i]);
+
+
+        if (letter.toLowerCase() === but){
+          // console.log(allLetters[i].innerHTML);
+          allLetters[i].classList.add("show");
+          letterFound = allLetters[i].innerHTML;
+        }
       }
-      return letterFound;
       // console.log(letterFound);
 
-      }
-}
+      // if (letterFound == null){
+      //   return null;
+      // }
+
+};
+// console.log(letterFound);
 
 
-for (var i=0; i< buttons.length; i++) {
-  let button = buttons[i];
-       button.addEventListener("click",  function(){ //
-          checkLetter(button);
+keyboard.addEventListener('click', function(){
+  let button = event.target;
+  if (button.tagName === 'BUTTON' ) {
+    // console.log(button.innerHTML);
+      let letter = button.innerHTML;
+          checkLetter(letter);
+          // console.log('hi');
+
           if (letterFound == null){
-            console.log(letterFound);
+            missed++;
+            // console.log(missed);
+
+            let tries = document.getElementsByTagName('img');
+            console.log(tries);
+            tries[0].style.display = 'hide';
+            // let img = trY.getElementsByTagName('img')[0];
+
+            // tries.pop();
+            // console.log(scoreboard, trY);
+
+            // trY.removeChild(img);
+
+            // document.getElementsByClassName("tries").innerHTML = tries;
 
           };
+
+          // console.log(letterFound);
+
           button.className = 'chosen';
           button.disabled = true;
-          console.log(button);
+          // console.log(button);
+          let show = document.getElementsByClassName('show');
+          let letters = document.getElementsByClassName('letter');
 
-})};
+          let div = document.createElement('div');
+          var h2 = document.createElement("h2");
+          var won = document.createTextNode('You won!');
+          console.log(div);
+
+          h2.appendChild(won);
+          div.appendChild(h2);
+          div.className = 'win';
+          div.style.display = "block";
+
+
+
+          if (show.length == letters.length){
+
+
+
+          }
+
+}});
 
 
 
