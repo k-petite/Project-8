@@ -20,6 +20,7 @@
 
 * {
   box-sizing: border-box;
+  /*border: 1px solid red;*/
 }
 
 body {
@@ -29,10 +30,13 @@ body {
   height: 100vh;
 }
 
+
 li, ol, ul {
   padding: 0;
   display: inline-block;
+  list-style-type:none;
 }
+
 
 h2 {
   margin: 0;
@@ -84,13 +88,16 @@ button {
 /* Phrase */
 
 .letter {
+  color: transparent;
+  background: var(--color-neutral-light);
+}
+
+.section li {
   font-size: var(--font-size-medium);
   height: 65px;
   width: 65px;
   padding: 20px 1px 0 1px;
-  margin-right: 2px;
-  color: transparent;
-  background: var(--color-neutral-light);
+  margin: .5em 2px;
   border-radius: 5px;
 }
 
