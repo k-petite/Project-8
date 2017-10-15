@@ -1,7 +1,6 @@
 let qwerty = document.getElementById('qwerty');
 let phrase = document.getElementById('phrase');
 let missed = 0;
-let start = document.getElementsByClassName('btn__reset')[0];
 let overlay = document.getElementById("overlay");
 let keyboard = document.getElementById('qwerty');
 let buttons = keyboard.getElementsByTagName('button');
@@ -43,103 +42,71 @@ function checkLetter(but) {
   let allLetters = document.getElementsByClassName('letter');
       for (let i = 0; i < allLetters.length; i++) {
         let letter = allLetters[i].innerHTML;
-        // console.log(but);
-        // console.log(allLetters[i]);
-
-
         if (letter.toLowerCase() === but){
           // console.log(allLetters[i].innerHTML);
           allLetters[i].classList.add("show");
           letterFound = allLetters[i].innerHTML;
         }
       }
-      // console.log(letterFound);
-
-      // if (letterFound == null){
-      //   return null;
-      // }
 
 };
-// console.log(letterFound);
 
+//
+// function reset() {
+//   var li = document.getElementsByTagNamet("LI");
+//   var ul = document.getElementsByTagNamet('UL');
+//   ul.removeChild(li);
+// }
+
+function checkWin() {
+  let win = document.getElementById("win");
+    win.style.display = 'block';
+}
 
 keyboard.addEventListener('click', function(){
   let button = event.target;
+  let show = document.getElementsByClassName('show'); //addes win screen
+  let letters = document.getElementsByClassName('letter');
   if (button.tagName === 'BUTTON' ) {
-    // console.log(button.innerHTML);
       let letter = button.innerHTML;
-          checkLetter(letter);
-          // console.log('hi');
+      checkLetter(letter);
+      if (letterFound === null){ //counts mistakes  -should i add ===?
+          missed++;
 
-          if (letterFound == null){
-            missed++;
-            // console.log(missed);
+          var parent = document.getElementsByTagName("ol")[0];
+          var child = document.getElementsByClassName("tries")[0];
+          parent.removeChild(child);
+          console.log(missed);
 
-            let tries = document.getElementsByTagName('img');
-            console.log(tries);
-            tries[0].style.display = 'hide';
-            // let img = trY.getElementsByTagName('img')[0];
+          // images[0].style.display = 'none';
 
-            // tries.pop();
-            // console.log(scoreboard, trY);
+        };
+      button.className = 'chosen';
+      button.disabled = true;
 
-            // trY.removeChild(img);
+      if (missed === 5){
+        console.log('loser');
+        let lose = document.getElementById("lose");
+        // lose.style.display = 'block';
+        lose.style.display = 'block';
+      }
 
-            // document.getElementsByClassName("tries").innerHTML = tries;
-
-          };
-
-          // console.log(letterFound);
-
-          button.className = 'chosen';
-          button.disabled = true;
-          // console.log(button);
-          let show = document.getElementsByClassName('show');
-          let letters = document.getElementsByClassName('letter');
-
-          let div = document.createElement('div');
-          var h2 = document.createElement("h2");
-          var won = document.createTextNode('You won!');
-          console.log(div);
-
-          h2.appendChild(won);
-          div.appendChild(h2);
-          div.className = 'win';
-          div.style.display = "block";
-
-
-
-          if (show.length == letters.length){
-
-
-
-          }
-
+      if (show.length == letters.length){
+        checkWin();
+      }
 }});
 
-
-
-
-//     var input, filter, ul, li, a, i;
-//     input = document.getElementById('myInput');
-//     filter = input.value.toUpperCase();
-//     ul = document.getElementById("myUL");
-//     li = ul.getElementsByTagName('li');
-//
-//     // Loop through all list items, and hide those who don't match the search query
-//     for (i = 0; i < li.length; i++) {
-//         a = li[i].getElementsByTagName("a")[0];
-//         if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
-//             li[i].style.display = "";
-//         } else {
-//             li[i].style.display = "none";
-//         }
-//     }
-// }
+let start = document.getElementsByClassName('btn__reset')[0];
+// for(let i=0; i < start.length; i++){
+//  start = document.getElementsByClassName('btn__reset')[i];
 
 
 start.addEventListener("click", function(){ //hides overlay when start game button pressed
+
     document.getElementById("overlay").style.display = "none";
+
+
     const phraseArray = getRandomPhraseAsArray(phrases);
     addPhrasetoDisplay(phraseArray);
+
 });
