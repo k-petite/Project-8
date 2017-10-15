@@ -13,9 +13,11 @@ let phrases = [ 'Well nobody is perfect',
                 'Elementary my dear Watson' ];
 let letterFound;
 let start = document.getElementsByClassName('btn__reset')[0];
+let allLetters = document.getElementsByClassName('letter');
 
 let ms = 'hiiii';
-
+let ul = phrase.getElementsByTagName('ul')[0];
+console.log(ul);
 
 function getRandomPhraseAsArray(arr){ //gets random phrase, divides it into array and remove it from list of phrases
   let randomphrase = arr[Math.floor(Math.random() * (arr.length-1))]; //gets random phrase
@@ -27,57 +29,76 @@ function getRandomPhraseAsArray(arr){ //gets random phrase, divides it into arra
 };
 
 function addPhrasetoDisplay(arr) { //put letters of the choosen phrase in LIs and adds letter class to letters
-  let ul = phrase.getElementsByTagName('ul')[0];
+  // let ul = phrase.getElementsByTagName('ul')[0];
 
     for (i = 0; i < arr.length; i++){
       var li = document.createElement("LI");
       var letter = document.createTextNode(arr[i]);
       li.appendChild(letter);
       ul.appendChild(li);
-      console.log(arr[i]);
-
-      if (li.innerHTML !== ' '){
+      let letters = ul.getElementsByTagName('li');
+      if (li.innerHTML != ' '){
         // console.log(li);
-        let letters = document.getElementsByTagName('li');
         letters[i].className = "letter";
       }
     }
-
 };
 
-function create() {
-  const phraseArray = getRandomPhraseAsArray(phrases);
-  addPhrasetoDisplay(phraseArray);
-}
 
 function reset() {
   let ul = phrase.getElementsByTagName('ul')[0];
   let lis = ul.getElementsByTagName('li');
   let buttons = keyboard.getElementsByTagName('button');
-  lose.style.display = 'block';
-
+  // console.log(lis);
+  console.log(lis[0]);
+  missed = 0;
   for(let i=0; i < lis.length; i++){ //removes all letter created in previous game
-    phrase.remove(lis[i]);
+    ul.removeChild(lis[i]);
+    // ul.removeChild(ul.childNodes[i]);
+    // lis[0].parentNode.removeChild(lis[0]);
     // lis[i].classList.remove("show", 'letter');
   }
+  console.log(ul);
 
   for(let i=0; i < buttons.length; i++){ //removes all letter created in previous game
     buttons[i].classList.remove("chosen");
-  }
-  missed = 0;
+    buttons[i].disabled = false;
 
-  console.log(lis);
+  }
+  for(let i=0; i < 5; i++){ //set hearts back to five
+    // var parent = document.getElementsByTagName("ol")[0];
+    // var child = document.createElement("li");
+    // parent.appendChild(child);
+    // console.log(child[i]);
+    var parent = document.getElementsByTagName("ol")[0];
+    var child = document.getElementsByClassName("tries")[i];
+    // child[i].className = "tries";
+    child.style.display = 'inline-block';
+  }
+  for (let i = 0; i < allLetters.length; i++) {
+    // var letter = allLetters[i].innerHTML;
+      allLetters[i].classList.remove("show");
+      letterFound = null;
+  }
+
+
+
+
 }
 
 function checkWin() {
-  let win = document.getElementById("win");
+  // let win = document.getElementById("win");
+    let win = document.getElementById("win");
+    let lose = document.getElementById("lose");
+    overlay.style.display = 'block';
+    lose.style.display = 'none';
     win.style.display = 'block';
     reset();
 }
 
+
 function checkLetter(but) {
   letterFound = null;
-  let allLetters = document.getElementsByClassName('letter');
       for (let i = 0; i < allLetters.length; i++) {
         let letter = allLetters[i].innerHTML;
         if (letter.toLowerCase() === but){
@@ -86,11 +107,7 @@ function checkLetter(but) {
           letterFound = allLetters[i].innerHTML;
         }
       }
-
 };
-
-
-
 
 keyboard.addEventListener('click', function(){
   let button = event.target;
@@ -103,24 +120,33 @@ keyboard.addEventListener('click', function(){
           missed++;
 
           var parent = document.getElementsByTagName("ol")[0];
-          var child = document.getElementsByClassName("tries")[0];
-          parent.removeChild(child);
-          // console.log(missed);
-
-          // images[0].style.display = 'none';
-
+          var child = document.getElementsByClassName("tries")[missed];
+          if (missed < 5){
+            child.style.display = 'none';
+          }
         };
       button.className = 'chosen';
       button.disabled = true;
 
-      if (missed === 5){
-        let lose = document.getElementById("lose");
-        reset();
-      }
-
-      if (show.length == letters.length){
+      if (show.length === letters.length){
         checkWin();
       }
+
+
+      if (missed === 5){
+        // let lose = document.getElementById("lose");
+        reset();
+        // let h2 = document.getElementsByClassName("lose")[0];
+        let win = document.getElementById("win");
+        let lose = document.getElementById("lose");
+        overlay.style.display = 'block';
+        lose.style.display = 'block';
+        win.style.display = 'none';
+        // button.style.display = 'inline-block';
+
+        // console.log(overlay);
+      }
+
 }});
 
 
@@ -129,25 +155,10 @@ keyboard.addEventListener('click', function(){
 
 
 start.addEventListener("click", function(){ //hides overlay when start game button pressed
-    document.getElementById("overlay").style.display = "none";
-    create();
-});
-
-win.addEventListener('click', function(){
-  let button = event.target;
-  if (button.tagName === 'BUTTON' ) {
-    document.getElementById("lose").style.display = "none";
-    document.getElementById("win").style.display = "none";
-    document.getElementById("overlay").style.display = "block";
-   }
-});
-
-lose.addEventListener('click', function(){
   let button = event.target;
   if (button.tagName === 'A' ) {
-    document.getElementById("lose").style.display = "none";
-    document.getElementById("win").style.display = "none";
-    document.getElementById("overlay").style.display = "block";
-   }
-
+    document.getElementById("overlay").style.display = "none";
+    const phraseArray = getRandomPhraseAsArray(phrases);
+    addPhrasetoDisplay(phraseArray);
+  }
 });
