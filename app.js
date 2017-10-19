@@ -15,7 +15,9 @@ let phrases = [ 'Well nobody is perfect',
 let letterFound;
 let start = document.getElementsByClassName('btn__reset')[0];
 let allLetters = document.getElementsByClassName('letter');
-let h3 = document.getElementsByTagName('h3')[0];
+let result = document.getElementById('result');
+let rules = document.getElementById('rules');
+
 
 let gameover = document.getElementById("gameover");
 const overall = phrases.length;
@@ -50,6 +52,11 @@ function addPhrasetoDisplay(arr) { //put letters of the choosen phrase in LIs an
       if (li.innerHTML != ' '){
         // console.log(li);
         letters[i].className = "letter";
+        // if (li[i-1].innerHTML != ''){
+        //
+        // };
+      } else {
+        letters[i].className = "space";
       }
     }
 };
@@ -62,8 +69,8 @@ function gOver() {
     lose.style.display = 'none';
     win.style.display = 'none';
     gameover.style.display = 'block';
-    h3.textContent = notif;
-    h3.style.display = 'block';
+    result.textContent = notif;
+    result.style.display = 'block';
     // overlay.appendChild(h3);
     start.textContent = 'Start again';
     phrases = [ 'Well nobody is perfect',
@@ -83,7 +90,7 @@ function reset() {
   let ul = phrase.getElementsByTagName('ul')[0];
   let lis = ul.getElementsByTagName('li');
   let buttons = keyboard.getElementsByTagName('button');
-  h3.style.display = 'none';
+  result.style.display = 'none';
 
   ul.textContent = "";
   missed = 0;
@@ -184,6 +191,7 @@ start.addEventListener("click", function(){ //hides overlay when start game butt
   let button = event.target;
   if (button.tagName === 'A' ) {
     document.getElementById("overlay").style.display = "none";
+    rules.style.display = 'none';
     const phraseArray = getRandomPhraseAsArray(phrases);
     addPhrasetoDisplay(phraseArray);
   }

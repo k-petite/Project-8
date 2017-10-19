@@ -27,7 +27,8 @@ body {
   justify-content: space-evenly;
   flex-direction: column;
   display: flex;
-  height: 100vh;
+  font-family: 'Raleway', sans-serif;
+  /*height: 100vh;*/
 }
 
 
@@ -36,6 +37,11 @@ li, ol, ul {
   display: inline-block;
   list-style-type:none;
 }
+
+/*.space{
+  line-height: 95px;
+}*/
+
 
 .heart {
   display: inline-block;
@@ -49,10 +55,28 @@ h2 {
   margin: 0;
 }
 
+.title {
+  background: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+}
+
+#rules h2 {
+  font-size: 1.2em;
+}
+
+#rules h3 {
+  font-size: 1.2em;
+}
+
+#rules {
+  width: 80%;
+  margin: 2em auto 0;
+}
+
+
 #win,
 #lose,
 #gameover,
-h3 {
+#result {
   display: none;
 }
 
@@ -116,8 +140,18 @@ a {
   border-radius: 5px;
 }
 
+/*#phrase li {
+  font-size: var(--font-size-medium);
+  height: 3em;
+  width: 3em;
+  padding: 20px 1px 0 1px;
+  margin: .5em 2px;
+  border-radius: 5px;
+}*/
+
 .space {
   width: 15px;
+  border-bottom: 1px solid #76CE82;
 }
 
 .show {
