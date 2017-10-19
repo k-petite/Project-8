@@ -50,7 +50,9 @@ h2 {
 }
 
 #win,
-#lose {
+#lose,
+#gameover,
+h3 {
   display: none;
 }
 
