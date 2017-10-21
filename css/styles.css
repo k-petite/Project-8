@@ -28,6 +28,7 @@ body {
   flex-direction: column;
   display: flex;
   font-family: 'Raleway', sans-serif;
+  margin: 50px;
   /*height: 100vh;*/
 }
 
@@ -57,6 +58,7 @@ h2 {
 
 .title {
   background: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+  margin-top:50px;
 }
 
 #rules h2 {
@@ -78,6 +80,10 @@ h2 {
 #gameover,
 #result {
   display: none;
+}
+
+.phrase ul {
+  max-width: 1085px;
 }
 
 button {
@@ -131,70 +137,8 @@ a {
   background: var(--color-neutral-light);
 }
 
-.section li {
-  font-size: var(--font-size-medium);
-  height: 65px;
-  width: 65px;
-  padding: 20px 1px 0 1px;
-  margin: .5em 2px;
-  border-radius: 5px;
-}
 
-/*#phrase li {
-  font-size: var(--font-size-medium);
-  height: 3em;
-  width: 3em;
-  padding: 20px 1px 0 1px;
-  margin: .5em 2px;
-  border-radius: 5px;
-}*/
 
-.space {
-  width: 15px;
-  border-bottom: 1px solid #76CE82;
-}
-
-.show {
-  color: #000;
-  background-color: #76CE82;
-}
-
-/* Keyboard */
-
-.keyrow {
-  display: flex;
-  justify-content: center;
-}
-
-.chosen {
-  background: var(--color-neutral);
-  border-radius: 5px;
-  font-size: var(--font-size-medium);
-  color: #FFFFFF;
-}
-
-.btn__reset {
-  padding: 8px;
-  margin: 50px auto;
-  background: #FFFFFF;
-  border-radius: 5px;
-  font-size: var(--font-size-medium);
-}
-
-/* Overlay */
-
-#overlay {
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  color: #FFFFFF;
-  justify-content: center;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  border-radius: 5px;
-}
 
 .title {
   color: #FFF;
@@ -238,4 +182,75 @@ a {
 
 .lose a {
   color: var(--color-lose);
+}
+
+/*
+@media (min-width: 758px) {
+
+}*/
+.section li {
+  font-size: var(--font-size-medium);
+  height: 65px;
+  width: 65px;
+  padding: 20px 1px 0 1px;
+  margin: .5em 2px;
+  border-radius: 5px;
+}
+
+/*#phrase li {
+  font-size: var(--font-size-medium);
+  height: 3em;
+  width: 3em;
+  padding: 20px 1px 0 1px;
+  margin: .5em 2px;
+  border-radius: 5px;
+}*/
+
+
+.space {
+  width: 15px;
+  /*border-bottom: 1px solid #76CE82;
+  border-radius: 0%;*/
+}
+
+.show {
+  color: #000;
+  background-color: #76CE82;
+}
+
+/* Keyboard */
+
+.keyrow {
+  display: flex;
+  justify-content: center;
+}
+
+.chosen {
+  background: var(--color-neutral);
+  border-radius: 5px;
+  font-size: var(--font-size-medium);
+  color: #FFFFFF;
+}
+
+.btn__reset {
+  padding: 8px;
+  margin: 50px auto;
+  background: #FFFFFF;
+  border-radius: 5px;
+  font-size: var(--font-size-medium);
+}
+
+/* Overlay */
+
+#overlay {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  color: #FFFFFF;
+  justify-content: center;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 5px;
 }

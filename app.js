@@ -17,49 +17,63 @@ let start = document.getElementsByClassName('btn__reset')[0];
 let allLetters = document.getElementsByClassName('letter');
 let result = document.getElementById('result');
 let rules = document.getElementById('rules');
-
-
 let gameover = document.getElementById("gameover");
 const overall = phrases.length;
-
 let ms = 'hiiii';
 let ul = phrase.getElementsByTagName('ul')[0];
 let score = 0;
+let randomphrase;
 
-
-// console.log(ul);
 
 function getRandomPhraseAsArray(arr){ //gets random phrase, divides it into array and remove it from list of phrases
-  let randomphrase = arr[Math.floor(Math.random() * (arr.length-1))]; //gets random phrase
+  randomphrase = arr[Math.floor(Math.random() * (arr.length-1))]; //gets random phrase
   let used = arr.indexOf(randomphrase); //finds passed phrase to remove it out of phrases array
-  // console.log(arr);
   let split = randomphrase.split(""); //splits passed array
-  arr.splice(used, 1); //remove random phrase from phrases array
-  // console.log(arr, split);
 
+  arr.splice(used, 1); //remove random phrase from phrases array
+  // console.log(randomphrase);
   return split;
-};
+} //end of getRandomPhraseAsArray(arr) function
 
 function addPhrasetoDisplay(arr) { //put letters of the choosen phrase in LIs and adds letter class to letters
-  // let ul = phrase.getElementsByTagName('ul')[0];
-
-    for (i = 0; i < arr.length; i++){
+    for (let i = 0; i < arr.length; i++){
       var li = document.createElement("LI");
       var letter = document.createTextNode(arr[i]);
       li.appendChild(letter);
       ul.appendChild(li);
       let letters = ul.getElementsByTagName('li');
       if (li.innerHTML != ' '){
-        // console.log(li);
         letters[i].className = "letter";
-        // if (li[i-1].innerHTML != ''){
-        //
-        // };
       } else {
         letters[i].className = "space";
       }
     }
-};
+    // console.log(randomphrase);
+    let words = randomphrase.split(" ");
+    var firstwords = [words[0]];
+    let c = 0;
+    let wordslength = 0;
+    let liN = 0; //order of li for adding break
+
+    // console.log(words);
+
+      while (c < words.length){ //prevents from breaking one word into lines
+        wordslength += words[c].length;
+        if (wordslength < 11){
+          c++;
+        } else {
+          firstwords.push(words[c]);
+          wordslength -= words[c].length;
+          let br = document.createElement('br');
+          liN += Number(wordslength + c-1);
+          console.log(liN);
+          ul.insertBefore(br, ul.childNodes[liN]);
+          wordslength = 0;
+          }
+
+      }
+
+} //end of addPhrasetoDisplay(arr) function
 
 function gOver() {
   if (phrases.length === 0) {
@@ -79,9 +93,8 @@ function gOver() {
                 'One does not simply walk into Mordor',
                 'Elementary my dear Watson' ];
     console.log(overlay);
-    // overlay.removeChild(h3);
   };
-}
+} //end of gOver() function
 
 
 function reset() {
@@ -91,15 +104,9 @@ function reset() {
   let lis = ul.getElementsByTagName('li');
   let buttons = keyboard.getElementsByTagName('button');
   result.style.display = 'none';
-
   ul.textContent = "";
   missed = 0;
-  // console.log(score);
   gameover.style.display = 'none';
-  // console.log(h3);
-  // h3.textContent = '';
-
-
 
   for(let i=0; i < buttons.length; i++){ //enables all buttons pressed in previous game
     buttons[i].classList.remove("chosen");
@@ -118,7 +125,7 @@ function reset() {
 
   gOver();
 
-}
+} //end of reset() function
 
 function checkWin() {
   // let win = document.getElementById("win");
@@ -129,7 +136,7 @@ function checkWin() {
     win.style.display = 'block';
     score++;
     reset();
-}
+} //end of checkWin() function
 
 
 function checkLetter(but) {
@@ -142,16 +149,16 @@ function checkLetter(but) {
           letterFound = allLetters[i].innerHTML;
         }
       }
-};
+}; //end of checkLetter(but) function
 
-keyboard.addEventListener('click', function(){
+keyboard.addEventListener('click', function(){ //check clicked buttons for correctness and ends game
   let button = event.target;
   let show = document.getElementsByClassName('show');
   let letters = document.getElementsByClassName('letter');
   if (button.tagName === 'BUTTON' ) {
     let letter = button.innerHTML;
     checkLetter(letter);
-    if (letterFound === null){ //counts mistakes  -should i add ===?
+    if (letterFound === null){ //counts mistakes
         missed++;
 
         var parent = document.getElementsByTagName("ol")[0];
@@ -168,11 +175,6 @@ keyboard.addEventListener('click', function(){
     }
 
     if (missed === 5){
-      // let lose = document.getElementById("lose");
-
-      // let h2 = document.getElementsByClassName("lose")[0];
-      // let win = document.getElementById("win");
-      // let lose = document.getElementById("lose");
       overlay.style.display = 'block';
       win.style.display = 'none';
       if (phrases.length == 0)
