@@ -22,7 +22,8 @@ const overall = phrases.length;
 let ms = 'hiiii';
 let ul = phrase.getElementsByTagName('ul')[0];
 let score = 0;
-let randomphrase;
+var randomphrase;
+let winphrase = document.getElementById('description');
 
 
 function getRandomPhraseAsArray(arr){ //gets random phrase, divides it into array and remove it from list of phrases
@@ -31,7 +32,7 @@ function getRandomPhraseAsArray(arr){ //gets random phrase, divides it into arra
   let split = randomphrase.split(""); //splits passed array
 
   arr.splice(used, 1); //remove random phrase from phrases array
-  // console.log(randomphrase);
+  console.log(randomphrase);
   return split;
 } //end of getRandomPhraseAsArray(arr) function
 
@@ -50,28 +51,57 @@ function addPhrasetoDisplay(arr) { //put letters of the choosen phrase in LIs an
     }
     // console.log(randomphrase);
     let words = randomphrase.split(" ");
-    var firstwords = [words[0]];
+    // var firstwords = [words[0]];
     let c = 0;
     let wordslength = 0;
     let liN = 0; //order of li for adding break
+    let wordscount = 0;
+    let exact = 0; //addes plus one space as we know that next line will start with break and we should add one extra
 
-    // console.log(words);
-
-      while (c < words.length){ //prevents from breaking one word into lines
+      for (c = 0; c < words.length; c++){ //prevents from breaking one word into lines
         wordslength += words[c].length;
-        if (wordslength < 11){
-          c++;
+        if (wordslength < 11){ //collect set of words for one line
+          wordscount++;
         } else {
-          firstwords.push(words[c]);
           wordslength -= words[c].length;
           let br = document.createElement('br');
-          liN += Number(wordslength + c-1);
-          console.log(liN);
+          console.log(wordscount);
+          liN += wordslength;
+
+            if (wordscount > 1){
+              console.log(ms);
+              liN += wordscount + exact;
+              exact = 0;
+            }
+            if (wordslength=11){
+              exact++;
+            }
           ul.insertBefore(br, ul.childNodes[liN]);
           wordslength = 0;
+          wordscount = 0;
+          c--;
           }
 
       }
+
+      // while (c < words.length){ //prevents from breaking one word into lines
+      //   wordslength += words[c].length;
+      //   if (wordslength < 11){
+      //     c++;
+      //   } else if (words[c].length == 11){
+      //     liN += wordslength + 1;  //
+      //     ul.insertBefore(br, ul.childNodes[liN]);
+      //     wordslength = 0;
+      //   } else {
+      //     // firstwords.push(words[c]);
+      //     wordslength -= words[c].length;
+      //     let br = document.createElement('br');
+      //     liN += wordslength + c-1; //(c-1)=number of spaces}
+      //     ul.insertBefore(br, ul.childNodes[liN]);
+      //     wordslength = 0;
+      //     }
+      //
+      // }
 
 } //end of addPhrasetoDisplay(arr) function
 
@@ -92,17 +122,18 @@ function gOver() {
                 'Frankly my dear I do not give a damn',
                 'One does not simply walk into Mordor',
                 'Elementary my dear Watson' ];
-    console.log(overlay);
+    // console.log(overlay);
   };
 } //end of gOver() function
 
 
 function reset() {
-  console.log(phrases.length);
+  // console.log(phrases.length);
 
   let ul = phrase.getElementsByTagName('ul')[0];
   let lis = ul.getElementsByTagName('li');
   let buttons = keyboard.getElementsByTagName('button');
+
   result.style.display = 'none';
   ul.textContent = "";
   missed = 0;
@@ -128,12 +159,44 @@ function reset() {
 } //end of reset() function
 
 function checkWin() {
-  // let win = document.getElementById("win");
-    // let win = document.getElementById("win");
-    // let lose = document.getElementById("lose");
+  let description = winphrase.getElementsByTagName('h3')[0];
+  let image = winphrase.getElementsByTagName('img')[0];
+    description.textContent = '';
+    image.removeAttribute("src");
+    // let phrase = document.createTextNode(randomphrase);
+    description.textContent = randomphrase.toString();
+    image.setAttribute("alt", "picture");
+
+
+
+
+    let keywords = ['NOBODY', 'JAMES', 'FRANKLY', 'SIMPLY','ELEMENTARY'];
+    console.log(keywords.length);
+    for (let i=0; i < keywords.length; i++){
+      let divided = description.textContent.toUpperCase().split(' ');
+      let index = divided.indexOf(keywords[i]);
+      console.log(keywords[i], index);
+      if (index > -1) {
+          if (i == 0){
+            image.setAttribute("src", "images/nobody.gif");
+          } else if (i == 1){
+            image.setAttribute("src", "images/james.jpg");
+          } else if (i == 2){
+            image.setAttribute("src", "images/mydear.jpg");
+          } else if (i == 3){
+            image.setAttribute("src", "images/simplywalk.jpg");
+          } else if (i == 4){
+            image.setAttribute("src", "images/elementary.gif");
+          }
+      }
+    }
+
+
+
     overlay.style.display = 'block';
     lose.style.display = 'none';
     win.style.display = 'block';
+    winphrase.style.display = 'block';
     score++;
     reset();
 } //end of checkWin() function
@@ -193,6 +256,7 @@ start.addEventListener("click", function(){ //hides overlay when start game butt
   let button = event.target;
   if (button.tagName === 'A' ) {
     document.getElementById("overlay").style.display = "none";
+    winphrase.style.display = 'none';
     rules.style.display = 'none';
     const phraseArray = getRandomPhraseAsArray(phrases);
     addPhrasetoDisplay(phraseArray);
