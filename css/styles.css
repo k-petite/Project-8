@@ -61,16 +61,14 @@ h2 {
   margin-top:50px;
 }
 
-#rules h2 {
-  font-size: 1.2em;
-}
-
 #rules h3 {
   font-size: 1.2em;
+  line-height: 1.5em;
+  font-weight: 100;
 }
 
 #rules {
-  width: 80%;
+  width: 50%;
   margin: 2em auto 0;
 }
 
@@ -80,6 +78,20 @@ h2 {
 #gameover,
 #result {
   display: none;
+}
+
+#win,
+#lose {
+  font-size: 2em;
+  margin: 1em;
+}
+
+#win{
+  color: green;
+}
+
+#lose{
+  color: red;
 }
 
 .phrase ul {

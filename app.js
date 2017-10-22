@@ -26,6 +26,8 @@ var randomphrase;
 let winphrase = document.getElementById('description');
 
 
+
+
 function getRandomPhraseAsArray(arr){ //gets random phrase, divides it into array and remove it from list of phrases
   randomphrase = arr[Math.floor(Math.random() * (arr.length-1))]; //gets random phrase
   let used = arr.indexOf(randomphrase); //finds passed phrase to remove it out of phrases array
@@ -35,6 +37,8 @@ function getRandomPhraseAsArray(arr){ //gets random phrase, divides it into arra
   console.log(randomphrase);
   return split;
 } //end of getRandomPhraseAsArray(arr) function
+
+
 
 function addPhrasetoDisplay(arr) { //put letters of the choosen phrase in LIs and adds letter class to letters
     for (let i = 0; i < arr.length; i++){
@@ -105,8 +109,9 @@ function addPhrasetoDisplay(arr) { //put letters of the choosen phrase in LIs an
 
 } //end of addPhrasetoDisplay(arr) function
 
+
+
 function gOver() {
-  if (phrases.length === 0) {
 
     let notif = 'You guessed '+ score +' out of '+ overall +'!';
     overlay.style.display = 'block';
@@ -115,21 +120,18 @@ function gOver() {
     gameover.style.display = 'block';
     result.textContent = notif;
     result.style.display = 'block';
-    // overlay.appendChild(h3);
-    start.textContent = 'Start again';
+    start.textContent = 'Play again';
     phrases = [ 'Well nobody is perfect',
                 'Bond James Bond',
                 'Frankly my dear I do not give a damn',
                 'One does not simply walk into Mordor',
                 'Elementary my dear Watson' ];
-    // console.log(overlay);
-  };
+
 } //end of gOver() function
 
 
-function reset() {
-  // console.log(phrases.length);
 
+function reset() {
   let ul = phrase.getElementsByTagName('ul')[0];
   let lis = ul.getElementsByTagName('li');
   let buttons = keyboard.getElementsByTagName('button');
@@ -154,52 +156,50 @@ function reset() {
       letterFound = null;
   }
 
+  if (phrases.length === 0) {
   gOver();
-
+  }
 } //end of reset() function
+
+
 
 function checkWin() {
   let description = winphrase.getElementsByTagName('h3')[0];
   let image = winphrase.getElementsByTagName('img')[0];
-    description.textContent = '';
-    image.removeAttribute("src");
-    // let phrase = document.createTextNode(randomphrase);
-    description.textContent = randomphrase.toString();
-    image.setAttribute("alt", "picture");
+  let keywords = ['NOBODY', 'JAMES', 'FRANKLY', 'SIMPLY','ELEMENTARY'];
 
+  description.textContent = '';
+  image.removeAttribute("src");
+  // let phrase = document.createTextNode(randomphrase);
+  description.textContent = randomphrase.toString();
+  image.setAttribute("alt", "picture");
 
-
-
-    let keywords = ['NOBODY', 'JAMES', 'FRANKLY', 'SIMPLY','ELEMENTARY'];
-    console.log(keywords.length);
-    for (let i=0; i < keywords.length; i++){
-      let divided = description.textContent.toUpperCase().split(' ');
-      let index = divided.indexOf(keywords[i]);
-      console.log(keywords[i], index);
-      if (index > -1) {
-          if (i == 0){
-            image.setAttribute("src", "images/nobody.gif");
-          } else if (i == 1){
-            image.setAttribute("src", "images/james.jpg");
-          } else if (i == 2){
-            image.setAttribute("src", "images/mydear.jpg");
-          } else if (i == 3){
-            image.setAttribute("src", "images/simplywalk.jpg");
-          } else if (i == 4){
-            image.setAttribute("src", "images/elementary.gif");
-          }
-      }
+  for (let i=0; i < keywords.length; i++){
+    let divided = description.textContent.toUpperCase().split(' ');
+    let index = divided.indexOf(keywords[i]);
+    if (index > -1) {
+        if (i == 0){
+          image.setAttribute("src", "images/nobody.gif");
+        } else if (i == 1){
+          image.setAttribute("src", "images/james.jpg");
+        } else if (i == 2){
+          image.setAttribute("src", "images/mydear.jpg");
+        } else if (i == 3){
+          image.setAttribute("src", "images/simplywalk.jpg");
+        } else if (i == 4){
+          image.setAttribute("src", "images/elementary.gif");
+        }
     }
-
-
-
-    overlay.style.display = 'block';
-    lose.style.display = 'none';
-    win.style.display = 'block';
-    winphrase.style.display = 'block';
-    score++;
-    reset();
+  }
+  overlay.style.display = 'block';
+  lose.style.display = 'none';
+  win.style.display = 'block';
+  winphrase.style.display = 'block';
+  start.textContent = 'Next \u2192';
+  score++;
+  reset();
 } //end of checkWin() function
+
 
 
 function checkLetter(but) {
@@ -213,6 +213,8 @@ function checkLetter(but) {
         }
       }
 }; //end of checkLetter(but) function
+
+
 
 keyboard.addEventListener('click', function(){ //check clicked buttons for correctness and ends game
   let button = event.target;
@@ -244,6 +246,7 @@ keyboard.addEventListener('click', function(){ //check clicked buttons for corre
         {lose.style.display = 'none';
       } else {
         lose.style.display = 'block';
+        start.textContent = 'Next \u2192';
       };
       reset();
     }
