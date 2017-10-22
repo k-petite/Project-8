@@ -4,13 +4,17 @@
 /* Variables */
 
 :root {
-  --color-win: #78CF82;
-  --color-lose: #D94545;
-  --color-start: #5b85b7;
+  --color-title-bg: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+  --color-title: #124c4b;
+  --color-win: #bcffcf;
+  --color-lose: #e68a8a;
+  --color-start: rgb(123, 222, 201);
   --color-neutral: #445069;
   --color-neutral-light: #D2D2D2;
   --color-keys: #37474F;
   --color-keys-light: #E5E5E5;
+  --color-button: #0f9997;
+  --color-gamover: black;
   --font-size-large: 60px;
   --font-size-medium: 20px;
   --transition: all .2s ease-in-out;
@@ -39,9 +43,6 @@ li, ol, ul {
   list-style-type:none;
 }
 
-/*.space{
-  line-height: 95px;
-}*/
 
 
 .heart {
@@ -57,19 +58,18 @@ h2 {
 }
 
 .title {
-  background: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
-  margin-top:50px;
+  background: var(--color-title-bg);
+  margin-top:0px;
 }
 
-#rules h3 {
-  font-size: 1.2em;
-  line-height: 1.5em;
+#rules h3{
+  font-size: 1.1em;
+  line-height: 2em;
   font-weight: 100;
-}
-
-#rules {
-  width: 50%;
+  color: var(--color-title);
+  width: 40%;
   margin: 2em auto 0;
+  text-align: justify;
 }
 
 
@@ -81,25 +81,52 @@ h2 {
 }
 
 #win,
-#lose {
+#lose,
+#gameover {
   font-size: 2em;
   margin: 1em;
 }
 
-#win{
-  color: green;
+
+#result {
+  font-size: 1.8em;
+  margin: 1em;
 }
 
-#lose{
-  color: red;
+#gameover,
+#result {
+  color: var(--color-gamover);
 }
+
 
 .phrase ul {
   max-width: 1085px;
 }
 
 
+#description {
+  display: none;
+  margin-bottom: 2em;
+  align-items:center;
+}
+
+
+#description h3,
+#description div{
+  /*display: inline-block;*/
+  /*max-width: 45%;*/
+  /*margin: 0 auto;*/
+  padding: 10px;
+  flex-grow: 1;
+  margin: 0 auto;
+}
+
+#description h3 {
+  font-size: 2em;
+}
+
 #description img {
+  max-width:80%;
   max-height: 300px;
 }
 
@@ -126,7 +153,7 @@ a {
   flex-direction: column;
   justify-content: space-around;
   height: 100%;
-  max-height: 900px;
+  /*max-height: 900px;*/
   text-align: center;
 }
 
@@ -164,7 +191,7 @@ a {
 }
 
 .start a {
-  color: var(--color-win);
+  color: var(--color-button);
 }
 
 .win, .lose {
@@ -187,17 +214,21 @@ a {
   margin: 2em;
 }
 
-.win a {
+h2, h3 {
+  color: #0b2222;
+}
+
+/*.win a {
   color: var(--color-win);
-}
+}*/
 
-.lose {
+/*.lose {
   background-color: var(--color-lose);
-}
+}*/
 
-.lose a {
+/*.lose a {
   color: var(--color-lose);
-}
+}*/
 
 /*
 @media (min-width: 758px) {
@@ -214,9 +245,7 @@ a {
   transition: background-color 2s, color 2s;
 }
 
-.space {
-  width: 15px;
-}
+
 
 .show {
   color: #000;

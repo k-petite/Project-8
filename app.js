@@ -69,11 +69,11 @@ function addPhrasetoDisplay(arr) { //put letters of the choosen phrase in LIs an
         } else {
           wordslength -= words[c].length;
           let br = document.createElement('br');
-          console.log(wordscount);
+          // console.log(wordscount);
           liN += wordslength;
 
             if (wordscount > 1){
-              console.log(ms);
+              // console.log(ms);
               liN += wordscount + exact;
               exact = 0;
             }
@@ -117,6 +117,7 @@ function gOver() {
     overlay.style.display = 'block';
     lose.style.display = 'none';
     win.style.display = 'none';
+    overlay.style.backgroundColor ='#7bdec9';
     gameover.style.display = 'block';
     result.textContent = notif;
     result.style.display = 'block';
@@ -193,8 +194,9 @@ function checkWin() {
   }
   overlay.style.display = 'block';
   lose.style.display = 'none';
+  overlay.style.backgroundColor ='#b2ecc3';
   win.style.display = 'block';
-  winphrase.style.display = 'block';
+  winphrase.style.display = 'flex';
   start.textContent = 'Next \u2192';
   score++;
   reset();
@@ -246,6 +248,7 @@ keyboard.addEventListener('click', function(){ //check clicked buttons for corre
         {lose.style.display = 'none';
       } else {
         lose.style.display = 'block';
+        overlay.style.backgroundColor ='#e68a8a';
         start.textContent = 'Next \u2192';
       };
       reset();
