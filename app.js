@@ -25,7 +25,6 @@ let winphrase = document.getElementById('description');
 
 
 
-
 function getRandomPhraseAsArray(arr){ //gets random phrase, divides it into array and remove it from list of phrases
   randomphrase = arr[Math.floor(Math.random() * (arr.length))]; //gets random phrase
   let used = arr.indexOf(randomphrase); //finds passed phrase to remove it out of phrases array
@@ -72,6 +71,17 @@ function preventBreak() {//this function prevents from breaking one word into li
 
 
 
+function show(ovl){//shows elements
+  ovl.style.display = 'block';
+}
+
+
+
+function hide(ovl){//hides elements
+  ovl.style.display = 'none';
+}
+
+
 function addPhrasetoDisplay(arr) { //put letters of the choosen phrase in LIs and adds letter class to letters
   for (let i = 0; i < arr.length; i++){
     var li = document.createElement("LI");
@@ -93,13 +103,13 @@ function addPhrasetoDisplay(arr) { //put letters of the choosen phrase in LIs an
 function gOver() {
 
     let notif = 'You guessed '+ score +' out of '+ overall +'!';
-    overlay.style.display = 'block';
-    lose.style.display = 'none';
-    win.style.display = 'none';
+    show(overlay);
     overlay.style.backgroundColor ='#7bdec9';
-    gameover.style.display = 'block';
+    hide(lose);
+    hide(win);
+    show(gameover);
     result.textContent = notif;
-    result.style.display = 'block';
+    show(result);
     start.textContent = 'Play again';
     phrases = [ 'Well nobody is perfect',
                 'Bond James Bond',
@@ -113,10 +123,10 @@ function gOver() {
 
 function reset() { //reset the game for playing again
   let ul = phrase.getElementsByTagName('ul')[0];
-  result.style.display = 'none';
+  hide(result);
   ul.textContent = "";
   missed = 0;
-  gameover.style.display = 'none';
+  hide(gameover);
 
   for(let i=0; i < buttons.length; i++){ //enables all buttons pressed in previous game
     buttons[i].classList.remove("chosen");
@@ -166,10 +176,10 @@ function checkWin() {
         }
     }
   }
-  overlay.style.display = 'block';
-  lose.style.display = 'none';
+  show(overlay);
+  hide(lose);
   overlay.style.backgroundColor ='#b2ecc3';
-  win.style.display = 'block';
+  show(win);
   winphrase.style.display = 'flex';
   start.textContent = 'Next \u2192';
   score++;
@@ -203,7 +213,7 @@ keyboard.addEventListener('click', function(){ //check clicked buttons for corre
         missed++;
         var child = document.getElementsByClassName("tries")[missed];
         if (missed < 5){
-          child.style.display = 'none';
+          hide(child);
         }
       }
     button.className = 'chosen';
@@ -214,12 +224,12 @@ keyboard.addEventListener('click', function(){ //check clicked buttons for corre
     }
 
     if (missed === 5){
-      overlay.style.display = 'block';
-      win.style.display = 'none';
-      if (phrases.length === 0)
-        {lose.style.display = 'none';
+      show(overlay);
+      hide(win);
+      if (phrases.length === 0){
+        hide(lose);
       } else {
-        lose.style.display = 'block';
+        show(lose);
         overlay.style.backgroundColor ='#e68a8a';
         start.textContent = 'Next \u2192';
       }
@@ -233,9 +243,9 @@ keyboard.addEventListener('click', function(){ //check clicked buttons for corre
 start.addEventListener("click", function(){ //hides overlay when start game button pressed
   let button = event.target;
   if (button.tagName === 'A' ) {
-    document.getElementById("overlay").style.display = "none";
-    winphrase.style.display = 'none';
-    rules.style.display = 'none';
+    hide(overlay);
+    hide(winphrase);
+    hide(rules);
     const phraseArray = getRandomPhraseAsArray(phrases);
     addPhrasetoDisplay(phraseArray);
   }
