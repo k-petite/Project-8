@@ -218,22 +218,6 @@ h2, h3 {
   color: #0b2222;
 }
 
-/*.win a {
-  color: var(--color-win);
-}*/
-
-/*.lose {
-  background-color: var(--color-lose);
-}*/
-
-/*.lose a {
-  color: var(--color-lose);
-}*/
-
-/*
-@media (min-width: 758px) {
-
-}*/
 .section li {
   font-size: var(--font-size-medium);
   height: 65px;

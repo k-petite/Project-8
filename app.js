@@ -1,7 +1,5 @@
-let qwerty = document.getElementById('qwerty');
 let phrase = document.getElementById('phrase');
-
-let missed = 0;
+let missed = 0; //number of the wrong letter pressed
 let overlay = document.getElementById("overlay");
 let keyboard = document.getElementById('qwerty');
 let win = document.getElementById('win');
@@ -19,7 +17,7 @@ let result = document.getElementById('result');
 let rules = document.getElementById('rules');
 let gameover = document.getElementById("gameover");
 const overall = phrases.length;
-let ms = 'hiiii';
+// let ms = 'hiiii';
 let ul = phrase.getElementsByTagName('ul')[0];
 let score = 0;
 var randomphrase;
@@ -29,84 +27,65 @@ let winphrase = document.getElementById('description');
 
 
 function getRandomPhraseAsArray(arr){ //gets random phrase, divides it into array and remove it from list of phrases
-  randomphrase = arr[Math.floor(Math.random() * (arr.length-1))]; //gets random phrase
+  randomphrase = arr[Math.floor(Math.random() * (arr.length))]; //gets random phrase
   let used = arr.indexOf(randomphrase); //finds passed phrase to remove it out of phrases array
   let split = randomphrase.split(""); //splits passed array
-
   arr.splice(used, 1); //remove random phrase from phrases array
-  console.log(randomphrase);
+  // console.log(randomphrase);
   return split;
 } //end of getRandomPhraseAsArray(arr) function
 
 
 
+function preventBreak() {//this function prevents from breaking one word into lines
+
+  let words = randomphrase.split(" "); //set of words from random phrase
+  let wordslength = 0; //counts the sum of the letters of all the words in one row
+  let liN = 0; //order of li prior to which we need to add a break
+  let wordscount = 0; //count how many words are in the line
+  let exact = 0; //needed in case if the line will start with the space
+
+  for (i = 0; i < words.length; i++){
+    wordslength += words[i].length;
+    if (wordslength < 11){
+      wordscount++;
+      if (wordslength === 10 && wordscount === 1){
+        exact++; //addes plus one space as we know that next line will start with break and we should count one extra space for the next row
+      }
+    } else {
+      wordslength -= words[i].length;
+      let br = document.createElement('br');
+      liN += wordslength;
+
+        if (wordscount > 1){
+          liN += wordscount + exact;
+          exact = 0;
+        }
+
+      ul.insertBefore(br, ul.childNodes[liN]);
+      wordslength = 0;
+      wordscount = 0;
+      i--;
+      }
+  }
+}//end of preventBreak() function
+
+
+
 function addPhrasetoDisplay(arr) { //put letters of the choosen phrase in LIs and adds letter class to letters
-    for (let i = 0; i < arr.length; i++){
-      var li = document.createElement("LI");
-      var letter = document.createTextNode(arr[i]);
-      li.appendChild(letter);
-      ul.appendChild(li);
-      let letters = ul.getElementsByTagName('li');
-      if (li.innerHTML != ' '){
-        letters[i].className = "letter";
-      } else {
-        letters[i].className = "space";
-      }
+  for (let i = 0; i < arr.length; i++){
+    var li = document.createElement("LI");
+    var letter = document.createTextNode(arr[i]);
+    li.appendChild(letter);
+    ul.appendChild(li);
+    let letters = ul.getElementsByTagName('li');
+    if (li.innerHTML != ' '){
+      letters[i].className = "letter";
+    } else {
+      letters[i].className = "space";
     }
-    // console.log(randomphrase);
-    let words = randomphrase.split(" ");
-    // var firstwords = [words[0]];
-    let c = 0;
-    let wordslength = 0;
-    let liN = 0; //order of li for adding break
-    let wordscount = 0;
-    let exact = 0; //addes plus one space as we know that next line will start with break and we should add one extra
-
-      for (c = 0; c < words.length; c++){ //prevents from breaking one word into lines
-        wordslength += words[c].length;
-        if (wordslength < 11){ //collect set of words for one line
-          wordscount++;
-        } else {
-          wordslength -= words[c].length;
-          let br = document.createElement('br');
-          // console.log(wordscount);
-          liN += wordslength;
-
-            if (wordscount > 1){
-              // console.log(ms);
-              liN += wordscount + exact;
-              exact = 0;
-            }
-            if (wordslength=11){
-              exact++;
-            }
-          ul.insertBefore(br, ul.childNodes[liN]);
-          wordslength = 0;
-          wordscount = 0;
-          c--;
-          }
-
-      }
-
-      // while (c < words.length){ //prevents from breaking one word into lines
-      //   wordslength += words[c].length;
-      //   if (wordslength < 11){
-      //     c++;
-      //   } else if (words[c].length == 11){
-      //     liN += wordslength + 1;  //
-      //     ul.insertBefore(br, ul.childNodes[liN]);
-      //     wordslength = 0;
-      //   } else {
-      //     // firstwords.push(words[c]);
-      //     wordslength -= words[c].length;
-      //     let br = document.createElement('br');
-      //     liN += wordslength + c-1; //(c-1)=number of spaces}
-      //     ul.insertBefore(br, ul.childNodes[liN]);
-      //     wordslength = 0;
-      //     }
-      //
-      // }
-
+  }
+  preventBreak();
 } //end of addPhrasetoDisplay(arr) function
 
 
@@ -132,11 +111,8 @@ function gOver() {
 
 
 
-function reset() {
+function reset() { //reset the game for playing again
   let ul = phrase.getElementsByTagName('ul')[0];
-  let lis = ul.getElementsByTagName('li');
-  let buttons = keyboard.getElementsByTagName('button');
-
   result.style.display = 'none';
   ul.textContent = "";
   missed = 0;
@@ -148,7 +124,6 @@ function reset() {
   }
 
   for(let i=0; i < 5; i++){ //set hearts back to five
-    var parent = document.getElementsByTagName("ol")[0];
     var child = document.getElementsByClassName("tries")[i];
     child.style.display = 'inline-block';
   }
@@ -171,7 +146,6 @@ function checkWin() {
 
   description.textContent = '';
   image.removeAttribute("src");
-  // let phrase = document.createTextNode(randomphrase);
   description.textContent = randomphrase.toString();
   image.setAttribute("alt", "picture");
 
@@ -179,7 +153,7 @@ function checkWin() {
     let divided = description.textContent.toUpperCase().split(' ');
     let index = divided.indexOf(keywords[i]);
     if (index > -1) {
-        if (i == 0){
+        if (i === 0){
           image.setAttribute("src", "images/nobody.gif");
         } else if (i == 1){
           image.setAttribute("src", "images/james.jpg");
@@ -214,7 +188,7 @@ function checkLetter(but) {
           letterFound = allLetters[i].innerHTML;
         }
       }
-}; //end of checkLetter(but) function
+} //end of checkLetter(but) function
 
 
 
@@ -227,13 +201,11 @@ keyboard.addEventListener('click', function(){ //check clicked buttons for corre
     checkLetter(letter);
     if (letterFound === null){ //counts mistakes
         missed++;
-
-        var parent = document.getElementsByTagName("ol")[0];
         var child = document.getElementsByClassName("tries")[missed];
         if (missed < 5){
           child.style.display = 'none';
         }
-      };
+      }
     button.className = 'chosen';
     button.disabled = true;
 
@@ -244,13 +216,13 @@ keyboard.addEventListener('click', function(){ //check clicked buttons for corre
     if (missed === 5){
       overlay.style.display = 'block';
       win.style.display = 'none';
-      if (phrases.length == 0)
+      if (phrases.length === 0)
         {lose.style.display = 'none';
       } else {
         lose.style.display = 'block';
         overlay.style.backgroundColor ='#e68a8a';
         start.textContent = 'Next \u2192';
-      };
+      }
       reset();
     }
   }
