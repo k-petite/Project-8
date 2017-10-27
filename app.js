@@ -17,8 +17,9 @@ let result = document.getElementById('result');
 let rules = document.getElementById('rules');
 let gameover = document.getElementById("gameover");
 const overall = phrases.length;
-// let ms = 'hiiii';
+let ms = 'hiiii';
 let ul = phrase.getElementsByTagName('ul')[0];
+let ol = document.getElementsByTagName('ol')[0];
 let score = 0;
 var randomphrase;
 let winphrase = document.getElementById('description');
@@ -49,7 +50,8 @@ function preventBreak() {//this function prevents from breaking one word into li
     if (wordslength < 11){
       wordscount++;
       if (wordslength === 10 && wordscount === 1){
-        exact++; //addes plus one space as we know that next line will start with break and we should count one extra space for the next row
+        exact++; /*addes plus one space as we know that next line will start
+                  with break and we should count one extra space for the next row*/
       }
     } else {
       wordslength -= words[i].length;
@@ -123,6 +125,7 @@ function gOver() {
 
 function reset() { //reset the game for playing again
   let ul = phrase.getElementsByTagName('ul')[0];
+  var hearts = ol.getElementsByTagName("img");
   hide(result);
   ul.textContent = "";
   missed = 0;
@@ -137,9 +140,15 @@ function reset() { //reset the game for playing again
     var child = document.getElementsByClassName("tries")[i];
     child.style.display = 'inline-block';
   }
+
   for (let i = 0; i < allLetters.length; i++) {
       allLetters[i].classList.remove("show");
       letterFound = null;
+  }
+
+  for (let i = 0; i < hearts.length; i++){
+      hearts[i].removeAttribute("src");
+      hearts[i].setAttribute("src", "images/liveHeart.png")
   }
 
   if (phrases.length === 0) {
@@ -204,22 +213,23 @@ function checkLetter(but) {
 
 keyboard.addEventListener('click', function(){ //check clicked buttons for correctness and ends game
   let button = event.target;
-  let show = document.getElementsByClassName('show');
+  let revealed = document.getElementsByClassName('show');
   let letters = document.getElementsByClassName('letter');
   if (button.tagName === 'BUTTON' ) {
     let letter = button.innerHTML;
     checkLetter(letter);
     if (letterFound === null){ //counts mistakes
         missed++;
-        var child = document.getElementsByClassName("tries")[missed];
+        var heart = ol.getElementsByTagName("img")[missed-1];
         if (missed < 5){
-          hide(child);
+          heart.removeAttribute("src");
+          heart.setAttribute("src", "images/lostHeart.png");
         }
       }
     button.className = 'chosen';
     button.disabled = true;
 
-    if (show.length === letters.length){
+    if (revealed.length === letters.length){
       checkWin();
     }
 
@@ -236,7 +246,7 @@ keyboard.addEventListener('click', function(){ //check clicked buttons for corre
       reset();
     }
   }
-});
+}); //end of main game code
 
 
 
